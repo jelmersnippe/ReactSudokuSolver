@@ -77,14 +77,12 @@ function App() {
                     </button>
                 </>
             )}
-            <div>
-                <input
-                    type="file"
-                    accept="application/json"
-                    onChange={handleFileSelect}
-                    className="action upload"
-                />
-            </div>
+            <input
+                type="file"
+                accept="application/json"
+                onChange={handleFileSelect}
+                className="action upload"
+            />
         </div>
     );
 }
