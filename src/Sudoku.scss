@@ -1,0 +1,26 @@
+.sudoku-grid {
+    display: flex;
+    flex-direction: column;
+
+    .row {
+        display: flex;
+        flex-direction: row;
+
+        .cell {
+            border: 1px solid black;
+            color: black;
+            height: 40px;
+            width: 40px;
+            background: #ccc;
+        }
+    }
+}
+
+.action.solve {
+    margin-top: 16px;
+    padding: 8px 16px;
+    background: #ccc;
+    color: black;
+    border: 1px solid black;
+    border-radius: 8px;
+}
