@@ -40,47 +40,43 @@ const checkSquare = (grid, rowIndex, cellIndex, valueToCheck) => {
     return validSquare;
 };
 
-export const solveGrid = (baseGrid, updatedGrid) => {
-    for (let rowIndex = 0; rowIndex < updatedGrid.length; rowIndex++) {
+export const solveGrid = (grid) => {
+    for (let rowIndex = 0; rowIndex < grid.length; rowIndex++) {
         for (
             let cellIndex = 0;
-            cellIndex < updatedGrid[rowIndex].length;
+            cellIndex < grid[rowIndex].length;
             cellIndex++
         ) {
-            if (baseGrid[rowIndex][cellIndex] !== 0) {
+            if (grid[rowIndex][cellIndex] !== 0) {
                 continue;
             }
 
             for (let numberToTry = 1; numberToTry < 10; numberToTry++) {
-                let validRow = checkRow(updatedGrid[rowIndex], numberToTry);
-                let validColumn = checkColumn(
-                    updatedGrid,
-                    cellIndex,
-                    numberToTry
-                );
+                let validRow = checkRow(grid[rowIndex], numberToTry);
+                let validColumn = checkColumn(grid, cellIndex, numberToTry);
                 let validSquare = checkSquare(
-                    updatedGrid,
+                    grid,
                     rowIndex,
                     cellIndex,
                     numberToTry
                 );
 
                 if (validRow && validColumn && validSquare) {
-                    updatedGrid[rowIndex][cellIndex] = numberToTry;
+                    grid[rowIndex][cellIndex] = numberToTry;
                 } else {
                     continue;
                 }
 
-                if (solveGrid(baseGrid, updatedGrid)) {
-                    return updatedGrid;
+                if (solveGrid(grid)) {
+                    return grid;
                 }
             }
 
-            updatedGrid[rowIndex][cellIndex] = 0;
+            grid[rowIndex][cellIndex] = 0;
 
             return false;
         }
     }
 
-    return updatedGrid;
+    return grid;
 };

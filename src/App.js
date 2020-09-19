@@ -3,7 +3,7 @@ import './App.scss';
 import './Sudoku.scss';
 import { solveGrid } from './SudokuLogic';
 
-const gridToSolve = [
+const sudoku = [
     [8, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 3, 6, 0, 0, 0, 0, 0],
     [0, 7, 0, 0, 9, 0, 2, 0, 0],
@@ -16,7 +16,15 @@ const gridToSolve = [
 ];
 
 function App() {
-    const [grid, setGrid] = useState(gridToSolve);
+    const [activeGrid, setActiveGrid] = useState(
+        // We map through and return the sliced rows
+        // This is to clone the base grid without a reference
+        // Otherwise (with a reference), every change made to the activeGrid would
+        // also affect the base grid
+        sudoku.map((row) => {
+            return row.slice();
+        })
+    );
 
     const renderGrid = (grid) => (
         <div className="sudoku-grid">
@@ -25,7 +33,11 @@ function App() {
                     <div className="row" key={`row-${rowIndex}`}>
                         {row?.map((cell, cellIndex) => (
                             <div
-                                className="cell"
+                                className={`cell ${
+                                    sudoku[rowIndex][cellIndex] !== 0
+                                        ? 'pre-filled'
+                                        : ''
+                                }`}
                                 key={`cell-${row}-${cellIndex}`}
                             >
                                 {cell}
@@ -39,13 +51,23 @@ function App() {
 
     return (
         <div className="App">
-            {grid && <div className="sudoku-wrapper">{renderGrid(grid)}</div>}
+            {activeGrid && (
+                <div className="sudoku-wrapper">{renderGrid(activeGrid)}</div>
+            )}
             <button
                 className="action solve"
                 onClick={() => {
-                    let solvedGrid = solveGrid(gridToSolve, gridToSolve);
-                    console.log(solvedGrid);
-                    setGrid(solvedGrid);
+                    var startTime = new Date().getTime();
+
+                    // We use the spread operator to create a new array object
+                    // If we change the values but don't actually modify the array object
+                    // React won't fire a proper state update and the
+                    // hooks won't work, nor will the Dom rerender
+                    setActiveGrid([...solveGrid(activeGrid)]);
+
+                    var endTime = new Date().getTime();
+
+                    console.log(`Solved in ${endTime - startTime} ms`);
                 }}
             >
                 Solve
