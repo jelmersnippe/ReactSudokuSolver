@@ -1,6 +1,7 @@
 .sudoku-grid {
     display: flex;
     flex-direction: column;
+    max-width: 100%;
 
     .row {
         display: flex;
@@ -17,15 +18,32 @@
                 background: #333333;
                 color: white;
             }
+
+            span {
+                line-height: 40px;
+            }
         }
     }
 }
 
 .action {
+    font-size: 18px;
     margin-top: 16px;
     padding: 8px 16px;
     background: #ccc;
     color: black;
     border: 1px solid black;
     border-radius: 8px;
+    cursor: pointer;
+    max-width: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+
+    &:hover {
+        background: darkgrey;
+    }
+}
+
+.action.download {
+    font-size: 14px;
 }

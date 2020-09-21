@@ -21,7 +21,7 @@ function App() {
                                 }`}
                                 key={`cell-${row}-${cellIndex}`}
                             >
-                                {cell}
+                                <span>{cell}</span>
                             </div>
                         ))}
                     </div>
@@ -53,11 +53,10 @@ function App() {
 
     return (
         <div className="App">
+            <h1>Sudoku Solver</h1>
             {activeGrid && sudokuToSolve && (
                 <>
-                    <div className="sudoku-wrapper">
-                        {renderGrid(activeGrid)}
-                    </div>
+                    {renderGrid(activeGrid)}
                     <button
                         className="action solve"
                         onClick={() => {
@@ -83,6 +82,15 @@ function App() {
                 onChange={handleFileSelect}
                 className="action upload"
             />
+            <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href={process.env.PUBLIC_URL + '/empty_sudoku.json'}
+                download="empty_sudoku.json"
+                className="action download"
+            >
+                Download an empty sudoku
+            </a>
         </div>
     );
 }
